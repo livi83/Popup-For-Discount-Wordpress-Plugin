@@ -10,6 +10,8 @@ class PFD_Admin
     {
         add_action('admin_menu', [$this, 'add_admin_menu']);
         add_action('admin_init', [$this, 'register_settings']);
+        add_action('admin_init', [$this, 'handle_delete_submission']);
+        add_action('admin_init', [$this, 'handle_bulk_delete_submissions']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
     }
 
@@ -132,6 +134,115 @@ class PFD_Admin
         );
     }
 
+    public function handle_delete_submission()
+    {
+        if (
+            !isset($_GET['page'], $_GET['pfd_action'], $_GET['submission_id']) ||
+            $_GET['page'] !== 'popup-for-discount-emails' ||
+            $_GET['pfd_action'] !== 'delete_submission'
+        ) {
+            return;
+        }
+
+        if (!current_user_can('manage_options')) {
+            wp_die('You do not have permission to delete submissions.');
+        }
+
+        $submission_id = absint($_GET['submission_id']);
+
+        if (!$submission_id) {
+            wp_safe_redirect(admin_url('admin.php?page=popup-for-discount-emails'));
+            exit;
+        }
+
+        check_admin_referer('pfd_delete_submission_' . $submission_id);
+
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'pfd_submissions';
+
+        $wpdb->delete(
+            $table_name,
+            [
+                'id' => $submission_id,
+            ],
+            [
+                '%d',
+            ]
+        );
+
+        $redirect_url = remove_query_arg(
+            [
+                'pfd_action',
+                'submission_id',
+                '_wpnonce',
+            ],
+            wp_get_referer() ? wp_get_referer() : admin_url('admin.php?page=popup-for-discount-emails')
+        );
+
+        $redirect_url = add_query_arg('pfd_deleted', '1', $redirect_url);
+
+        wp_safe_redirect($redirect_url);
+        exit;
+    }
+
+    public function handle_bulk_delete_submissions()
+    {
+        if (
+            !isset($_POST['pfd_bulk_action'], $_POST['pfd_submission_ids']) ||
+            $_POST['pfd_bulk_action'] !== 'delete'
+        ) {
+            return;
+        }
+
+        if (!current_user_can('manage_options')) {
+            wp_die('You do not have permission to delete submissions.');
+        }
+
+        check_admin_referer('pfd_bulk_delete_submissions');
+
+        $submission_ids = array_map(
+            'absint',
+            (array) wp_unslash($_POST['pfd_submission_ids'])
+        );
+
+        $submission_ids = array_filter($submission_ids);
+
+        if (empty($submission_ids)) {
+            wp_safe_redirect(admin_url('admin.php?page=popup-for-discount-emails'));
+            exit;
+        }
+
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'pfd_submissions';
+
+        $placeholders = implode(',', array_fill(0, count($submission_ids), '%d'));
+
+        $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM {$table_name} WHERE id IN ({$placeholders})",
+                $submission_ids
+            )
+        );
+
+        $redirect_url = wp_get_referer() ? wp_get_referer() : admin_url('admin.php?page=popup-for-discount-emails');
+
+        $redirect_url = remove_query_arg(
+            [
+                'pfd_bulk_action',
+                'pfd_submission_ids',
+                '_wpnonce',
+            ],
+            $redirect_url
+        );
+
+        $redirect_url = add_query_arg('pfd_bulk_deleted', count($submission_ids), $redirect_url);
+
+        wp_safe_redirect($redirect_url);
+        exit;
+    }
+
     public function sanitize_settings($input)
     {
         $output = [];
@@ -219,15 +330,15 @@ class PFD_Admin
 
         if ($hook === 'toplevel_page_popup-for-discount') {
             wp_enqueue_media();
-
-            wp_enqueue_script(
-                'pfd-admin',
-                PFD_PLUGIN_URL . 'assets/js/admin.js',
-                ['jquery'],
-                PFD_VERSION,
-                true
-            );
         }
+
+        wp_enqueue_script(
+            'pfd-admin',
+            PFD_PLUGIN_URL . 'assets/js/admin.js',
+            ['jquery'],
+            PFD_VERSION,
+            true
+        );
     }
 
     public function render_settings_page()

@@ -2,6 +2,9 @@
     'use strict';
 
     $(document).ready(function () {
+        /**
+         * Media Library picker for image/logo fields.
+         */
         $('.pfd-select-media').on('click', function (event) {
             event.preventDefault();
 
@@ -46,5 +49,28 @@
             input.val('');
             preview.empty();
         });
+
+        /**
+         * Select all submissions in Collected Emails table.
+         */
+        const selectAll = document.getElementById('pfd-select-all-submissions');
+        const checkboxes = document.querySelectorAll('.pfd-submission-checkbox');
+
+        if (selectAll && checkboxes.length) {
+            selectAll.addEventListener('change', function () {
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.checked = selectAll.checked;
+                });
+            });
+
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    const checkedCount = document.querySelectorAll('.pfd-submission-checkbox:checked').length;
+
+                    selectAll.checked = checkedCount === checkboxes.length;
+                    selectAll.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+                });
+            });
+        }
     });
 })(jQuery);
