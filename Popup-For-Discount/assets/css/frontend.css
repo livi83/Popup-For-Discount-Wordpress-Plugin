@@ -1,0 +1,396 @@
+#pfd-popup,
+#pfd-popup *,
+#pfd-bar,
+#pfd-bar * {
+    box-sizing: border-box;
+}
+
+#pfd-popup {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, .55) !important;
+    z-index: 999999 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+    direction: ltr !important;
+}
+
+#pfd-popup.pfd-overlay {
+    display: none;
+}
+
+#pfd-popup .pfd-modal {
+    position: relative !important;
+    width: 840px !important;
+    max-width: calc(100vw - 40px) !important;
+    min-height: 560px !important;
+    max-height: calc(100vh - 40px) !important;
+    background: var(--pfd-popup-bg, #fff) !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    display: grid !important;
+    grid-template-columns: 45% 55% !important;
+    grid-template-areas: "image content" !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .25) !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+}
+
+#pfd-popup .pfd-image {
+    grid-area: image !important;
+    display: block !important;
+    width: 100% !important;
+    min-height: 560px !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+#pfd-popup .pfd-content {
+    grid-area: content !important;
+    width: 100% !important;
+    padding: 54px 64px !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    color: var(--pfd-popup-text, #000) !important;
+    background: var(--pfd-popup-bg, #fff) !important;
+    min-width: 0 !important;
+}
+
+#pfd-popup .pfd-logo {
+    max-width: 180px !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 auto 28px !important;
+    display: block !important;
+}
+
+#pfd-popup .pfd-content h2 {
+    margin: 0 0 16px !important;
+    padding: 0 !important;
+    font-size: 44px !important;
+    line-height: 1.05 !important;
+    font-weight: 800 !important;
+    color: var(--pfd-popup-text, #000) !important;
+    text-align: center !important;
+}
+
+#pfd-popup .pfd-content p {
+    font-size: 20px !important;
+    line-height: 1.25 !important;
+    margin: 0 0 18px !important;
+    padding: 0 !important;
+    color: var(--pfd-popup-text, #000) !important;
+    text-align: center !important;
+}
+
+#pfd-popup .pfd-accent-text {
+    color: var(--pfd-accent, #0084ff) !important;
+    font-weight: 700 !important;
+}
+
+#pfd-form {
+    width: 100% !important;
+    margin-top: 24px !important;
+}
+
+#pfd-email {
+    width: 100% !important;
+    height: 56px !important;
+    border: 1px solid #777 !important;
+    border-radius: 999px !important;
+    padding: 0 22px !important;
+    font-size: 17px !important;
+    line-height: 56px !important;
+    margin: 0 0 12px !important;
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+#pfd-form button {
+    width: 100% !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: var(--pfd-button-bg, #f7b800) !important;
+    color: var(--pfd-button-text, #000) !important;
+    font-size: 19px !important;
+    font-weight: 700 !important;
+    line-height: 58px !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    text-transform: none !important;
+}
+
+#pfd-popup .pfd-close {
+    position: absolute !important;
+    top: 18px !important;
+    right: 20px !important;
+    left: auto !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 36px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    z-index: 3 !important;
+    color: var(--pfd-close-color, #000) !important;
+    box-shadow: none !important;
+}
+
+#pfd-popup .pfd-code {
+    display: inline-block !important;
+    border: 2px dashed var(--pfd-popup-text, #000) !important;
+    border-radius: 6px !important;
+    padding: 12px 22px !important;
+    margin: 0 0 14px !important;
+    font-size: 21px !important;
+    font-weight: 800 !important;
+    letter-spacing: .5px !important;
+    color: var(--pfd-popup-text, #000) !important;
+}
+
+#pfd-popup .pfd-benefits {
+    text-align: left !important;
+    display: inline-block !important;
+    margin: 14px auto 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    font-size: 18px !important;
+    line-height: 1.25 !important;
+    color: var(--pfd-popup-text, #000) !important;
+}
+
+#pfd-popup .pfd-benefits li {
+    margin: 0 0 6px !important;
+    padding: 0 !important;
+}
+
+#pfd-bar {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    z-index: 999998 !important;
+    background: var(--pfd-bar-bg, #f7b800) !important;
+    color: var(--pfd-bar-text, #000) !important;
+    min-height: 48px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    font-size: 16px !important;
+    line-height: 1.3 !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, .12) !important;
+    padding: 8px 54px !important;
+    direction: ltr !important;
+    text-align: center !important;
+}
+
+#pfd-bar.pfd-bar {
+    display: none;
+}
+
+#pfd-bar span {
+    color: var(--pfd-bar-text, #000) !important;
+}
+
+#pfd-bar strong {
+    display: inline-block !important;
+    border: 2px dashed var(--pfd-bar-code-border, #fff) !important;
+    padding: 5px 14px !important;
+    border-radius: 5px !important;
+    font-weight: 800 !important;
+    background: rgba(255, 255, 255, .12) !important;
+    color: var(--pfd-bar-text, #000) !important;
+}
+
+#pfd-bar .pfd-bar-close {
+    position: absolute !important;
+    left: 12px !important;
+    right: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    color: var(--pfd-bar-text, #000) !important;
+    box-shadow: none !important;
+}
+
+#pfd-popup .pfd-modal-no-image {
+    grid-template-columns: 1fr !important;
+    grid-template-areas: "content" !important;
+    width: 520px !important;
+    max-width: calc(100vw - 40px) !important;
+}
+
+#pfd-popup .pfd-modal-no-image .pfd-content {
+    padding: 54px 64px !important;
+}
+#pfd-sticky-box {
+    position: fixed !important;
+    left: 20px !important;
+    bottom: 20px !important;
+    z-index: 999998 !important;
+    display: none;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .18) !important;
+    border-radius: 999px !important;
+}
+
+#pfd-sticky-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 46px !important;
+    padding: 12px 22px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: var(--pfd-bar-bg, #f7b800) !important;
+    color: var(--pfd-bar-text, #000) !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    cursor: pointer !important;
+    text-transform: none !important;
+    box-shadow: none !important;
+}
+
+#pfd-sticky-close {
+    position: absolute !important;
+    top: -10px !important;
+    right: -10px !important;
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: #222 !important;
+    color: #fff !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 24px !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .25) !important;
+    z-index: 2 !important;
+}
+
+#pfd-sticky-button:hover {
+    filter: brightness(.96);
+}
+
+#pfd-website {
+    position: absolute !important;
+    left: -99999px !important;
+    top: auto !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+#pfd-popup .pfd-privacy-text {
+    margin-top: 12px !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    color: var(--pfd-popup-text, #000) !important;
+    opacity: .72 !important;
+    text-align: center !important;
+}
+
+#pfd-popup .pfd-privacy-text a {
+    color: var(--pfd-accent, #0084ff) !important;
+    text-decoration: underline !important;
+}
+
+@media (max-width: 768px) {
+    #pfd-popup {
+        padding: 16px !important;
+        align-items: center !important;
+    }
+
+    #pfd-popup .pfd-modal {
+        width: 420px !important;
+        max-width: calc(100vw - 32px) !important;
+        min-height: auto !important;
+        max-height: calc(100vh - 32px) !important;
+        overflow-y: auto !important;
+        grid-template-columns: 1fr !important;
+        grid-template-areas:
+            "image"
+            "content" !important;
+    }
+
+    #pfd-popup .pfd-image {
+        min-height: 240px !important;
+    }
+
+    #pfd-popup .pfd-content {
+        padding: 34px 26px !important;
+    }
+
+    #pfd-popup .pfd-content h2 {
+        font-size: 34px !important;
+    }
+
+    #pfd-popup .pfd-content p {
+        font-size: 17px !important;
+    }
+
+    #pfd-popup .pfd-benefits {
+        font-size: 15px !important;
+    }
+
+    #pfd-bar {
+        font-size: 14px !important;
+        flex-wrap: wrap !important;
+        text-align: center !important;
+        padding: 8px 42px !important;
+    }
+    #pfd-sticky-box {
+		left: 14px !important;
+		bottom: 14px !important;
+		max-width: calc(100vw - 28px) !important;
+	}
+
+	#pfd-sticky-button {
+		max-width: calc(100vw - 28px) !important;
+		font-size: 14px !important;
+	}
+}
