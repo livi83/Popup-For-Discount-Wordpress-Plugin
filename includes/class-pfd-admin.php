@@ -306,6 +306,8 @@ class PFD_Admin
 		$output['sticky_hide_hours'] = isset($input['sticky_hide_hours'])
 			? absint($input['sticky_hide_hours'])
 			: 24;
+        
+        $output['delete_data_on_uninstall'] = !empty($input['delete_data_on_uninstall']) ? 1 : 0;
 
         return $output;
     }

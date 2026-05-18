@@ -45,6 +45,7 @@ $defaults = [
 	'discount_value' => '20',
 	'sticky_hide_hours' => 24,
     
+    'delete_data_on_uninstall' => 0,
 ];
 
 $settings = wp_parse_args($settings, $defaults);
@@ -396,6 +397,26 @@ $settings = wp_parse_args($settings, $defaults);
                             <input type="checkbox" name="pfd_settings[store_user_agent]" value="1" <?php checked($settings['store_user_agent'], 1); ?>>
                             Store browser user agent with the submitted email
                         </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Delete data on uninstall</th>
+                    <td>
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="pfd_settings[delete_data_on_uninstall]"
+                                value="1"
+                                <?php checked($settings['delete_data_on_uninstall'], 1); ?>
+                            >
+                            Delete plugin settings and collected email submissions when the plugin is uninstalled
+                        </label>
+
+                        <p class="description">
+                            Warning: If enabled, uninstalling the plugin will permanently delete all collected emails and plugin settings.
+                            Deactivating the plugin will not delete anything.
+                        </p>
                     </td>
                 </tr>
             </table>

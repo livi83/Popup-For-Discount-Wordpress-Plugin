@@ -81,6 +81,8 @@ class PFD_Activator
 			'discount_value' => '20',
 			'sticky_hide_hours' => 24,
 			'sticky_button_text' => '{discount}% Discount available',
+
+            'delete_data_on_uninstall' => 0,
             
         ];
 
