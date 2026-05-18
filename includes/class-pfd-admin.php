@@ -59,6 +59,10 @@ class PFD_Admin
             ? sanitize_email(wp_unslash($_GET['email_search']))
             : '';
 
+        $campaign_id = isset($_GET['campaign_id'])
+            ? sanitize_title(wp_unslash($_GET['campaign_id']))
+            : '';
+
         $coupon_code = isset($_GET['coupon_code'])
             ? sanitize_text_field(wp_unslash($_GET['coupon_code']))
             : '';
@@ -77,6 +81,11 @@ class PFD_Admin
 
         $where = ['1=1'];
         $params = [];
+
+        if (!empty($campaign_id)) {
+            $where[] = 'campaign_id = %s';
+            $params[] = $campaign_id;
+        }
 
         if (!empty($email_search)) {
             $where[] = 'email LIKE %s';
@@ -309,6 +318,10 @@ class PFD_Admin
         
         $output['delete_data_on_uninstall'] = !empty($input['delete_data_on_uninstall']) ? 1 : 0;
 
+        $output['campaign_id'] = isset($input['campaign_id'])
+            ? sanitize_title($input['campaign_id'])
+            : 'default-campaign';
+            
         return $output;
     }
 

@@ -26,6 +26,16 @@ $current_url = menu_page_url('popup-for-discount-emails', false);
                 </label>
 
                 <label>
+                    Campaign ID
+                    <input
+                        type="text"
+                        name="campaign_id"
+                        value="<?php echo esc_attr($campaign_id); ?>"
+                        placeholder="christmas-2026"
+                    >
+                </label>
+
+                <label>
                     Coupon code
                     <input
                         type="text"
@@ -68,6 +78,7 @@ $current_url = menu_page_url('popup-for-discount-emails', false);
                         [
                             'action' => 'pfd_export_csv',
                             'email_search' => $email_search,
+                            'campaign_id' => $campaign_id,
                             'coupon_code' => $coupon_code,
                             'date_from' => $date_from,
                             'date_to' => $date_to,
@@ -140,6 +151,7 @@ $current_url = menu_page_url('popup-for-discount-emails', false);
                         </th>
                         <th>ID</th>
                         <th>Email</th>
+                        <th>Campaign ID</th>
                         <th>Coupon code</th>
                         <th>Page URL</th>
                         <th>Date</th>
@@ -167,6 +179,8 @@ $current_url = menu_page_url('popup-for-discount-emails', false);
                                 <td>
                                     <strong><?php echo esc_html($item['email']); ?></strong>
                                 </td>
+
+                                <td><?php echo !empty($item['campaign_id']) ? esc_html($item['campaign_id']) : '—'; ?></td>
 
                                 <td><?php echo esc_html($item['coupon_code']); ?></td>
 
@@ -218,7 +232,7 @@ $current_url = menu_page_url('popup-for-discount-emails', false);
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="9">
+                            <td colspan="10">
                                 No collected emails found.
                             </td>
                         </tr>

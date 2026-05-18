@@ -46,6 +46,8 @@ $defaults = [
 	'sticky_hide_hours' => 24,
     
     'delete_data_on_uninstall' => 0,
+
+    'campaign_id' => 'default-campaign',
 ];
 
 $settings = wp_parse_args($settings, $defaults);
@@ -73,6 +75,26 @@ $settings = wp_parse_args($settings, $defaults);
                 </label>
             </td>
         </tr>
+
+        <tr>
+            <th scope="row">Campaign ID</th>
+            <td>
+                <input
+                    type="text"
+                    class="regular-text"
+                    name="pfd_settings[campaign_id]"
+                    value="<?php echo esc_attr($settings['campaign_id']); ?>"
+                    placeholder="christmas-2026"
+                >
+
+                <p class="description">
+                    Internal identifier for this popup campaign. Example:
+                    <code>christmas-2026</code>, <code>black-friday-main</code>.
+                    Used for filtering, exports and future analytics.
+                </p>
+            </td>
+        </tr>
+
 		<tr>
 			<th scope="row">Discount value</th>
 			<td>

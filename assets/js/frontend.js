@@ -19,9 +19,10 @@
 		const data = typeof pfdData !== 'undefined' ? pfdData : {};
 
 		const storageKey = data.storageKey || 'popup_for_discount_state';
-		const couponCode = data.couponCode || '';
-		const popupDelay = parseInt(data.popupDelay, 10) || 1200;
-		const stickyHideHours = parseInt(data.stickyHideHours, 10) || 24;
+        const campaignId = data.campaignId || '';
+        const couponCode = data.couponCode || '';
+        const popupDelay = parseInt(data.popupDelay, 10) || 1200;
+        const stickyHideHours = parseInt(data.stickyHideHours, 10) || 24;
 
         function getState() {
             try {
@@ -37,6 +38,7 @@
             localStorage.setItem(storageKey, JSON.stringify({
                 ...current,
                 ...data,
+                campaignId: campaignId,
                 couponCode: couponCode,
                 updatedAt: new Date().toISOString()
             }));
@@ -109,12 +111,16 @@
 		function init() {
 			let state = getState();
 
-			const savedCouponCode = state.couponCode || '';
+			const savedCampaignId = state.campaignId || '';
+            const savedCouponCode = state.couponCode || '';
 
-			if (savedCouponCode && savedCouponCode !== couponCode) {
-				localStorage.removeItem(storageKey);
-				state = {};
-			}
+            if (
+                (savedCampaignId && savedCampaignId !== campaignId) ||
+                (savedCouponCode && savedCouponCode !== couponCode)
+            ) {
+                localStorage.removeItem(storageKey);
+                state = {};
+            }
 
 			if (state.emailSubmitted) {
 				hideStickyButton();
@@ -161,9 +167,10 @@
             formData.append('action', 'pfd_save_email');
             formData.append('nonce', data.nonce || '');
 			formData.append('email', email);
-			formData.append('coupon_code', couponCode);
-			formData.append('page_url', window.location.href);
-			formData.append('pfd_website', honeypotValue);
+            formData.append('campaign_id', campaignId);
+            formData.append('coupon_code', couponCode);
+            formData.append('page_url', window.location.href);
+            formData.append('pfd_website', honeypotValue);
 
             fetch(data.ajaxUrl || '/wp-admin/admin-ajax.php', {
                 method: 'POST',

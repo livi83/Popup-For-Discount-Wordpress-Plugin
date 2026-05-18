@@ -26,6 +26,10 @@ class PFD_Export
         $email_search = isset($_GET['email_search'])
             ? sanitize_email(wp_unslash($_GET['email_search']))
             : '';
+        
+        $campaign_id = isset($_GET['campaign_id'])
+            ? sanitize_title(wp_unslash($_GET['campaign_id']))
+            : '';
 
         $coupon_code = isset($_GET['coupon_code'])
             ? sanitize_text_field(wp_unslash($_GET['coupon_code']))
@@ -47,6 +51,11 @@ class PFD_Export
             $params[] = '%' . $wpdb->esc_like($email_search) . '%';
         }
 
+        if (!empty($campaign_id)) {
+            $where[] = 'campaign_id = %s';
+            $params[] = $campaign_id;
+        }
+
         if (!empty($coupon_code)) {
             $where[] = 'coupon_code = %s';
             $params[] = $coupon_code;
@@ -64,7 +73,7 @@ class PFD_Export
 
         $where_sql = implode(' AND ', $where);
 
-        $sql = "SELECT id, email, coupon_code, page_url, user_ip, user_agent, created_at
+        $sql = "SELECT id, email, campaign_id, coupon_code, page_url, user_ip, user_agent, created_at
                 FROM {$table_name}
                 WHERE {$where_sql}
                 ORDER BY created_at DESC";
@@ -95,6 +104,7 @@ class PFD_Export
         fputcsv($output, [
             'ID',
             'Email',
+            'Campaign ID',
             'Coupon code',
             'Page URL',
             'IP address',
@@ -106,6 +116,7 @@ class PFD_Export
             fputcsv($output, [
                 $item['id'],
                 $item['email'],
+                $item['campaign_id'],
                 $item['coupon_code'],
                 $item['page_url'],
                 $item['user_ip'],

@@ -25,6 +25,7 @@ class PFD_Submissions
 			], 400);
 		}
         $email = isset($_POST['email']) ? sanitize_email(wp_unslash($_POST['email'])) : '';
+        $campaign_id = isset($_POST['campaign_id']) ? sanitize_title(wp_unslash($_POST['campaign_id'])) : '';
         $coupon_code = isset($_POST['coupon_code']) ? sanitize_text_field(wp_unslash($_POST['coupon_code'])) : '';
         $page_url = isset($_POST['page_url']) ? esc_url_raw(wp_unslash($_POST['page_url'])) : '';
 
@@ -55,6 +56,7 @@ class PFD_Submissions
             $table_name,
             [
                 'email' => $email,
+                'campaign_id' => $campaign_id,
                 'coupon_code' => $coupon_code,
                 'page_url' => $page_url,
                 'user_ip' => $user_ip,
@@ -62,6 +64,7 @@ class PFD_Submissions
                 'created_at' => current_time('mysql'),
             ],
             [
+                '%s',
                 '%s',
                 '%s',
                 '%s',

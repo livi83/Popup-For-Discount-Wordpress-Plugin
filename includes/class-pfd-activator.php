@@ -22,6 +22,7 @@ class PFD_Activator
         $sql = "CREATE TABLE {$table_name} (
             id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             email VARCHAR(190) NOT NULL,
+            campaign_id VARCHAR(100) NOT NULL DEFAULT '',
             coupon_code VARCHAR(100) NOT NULL DEFAULT '',
             page_url TEXT NULL,
             user_ip VARCHAR(100) NULL,
@@ -29,6 +30,7 @@ class PFD_Activator
             created_at DATETIME NOT NULL,
             PRIMARY KEY  (id),
             KEY email (email),
+            KEY campaign_id (campaign_id),
             KEY coupon_code (coupon_code),
             KEY created_at (created_at)
         ) {$charset_collate};";
@@ -83,6 +85,8 @@ class PFD_Activator
 			'sticky_button_text' => '{discount}% Discount available',
 
             'delete_data_on_uninstall' => 0,
+
+            'campaign_id' => 'default-campaign',
             
         ];
 

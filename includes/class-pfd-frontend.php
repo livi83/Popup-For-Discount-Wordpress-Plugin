@@ -58,6 +58,8 @@ class PFD_Frontend
             'close_button_color' => '#000000',
 			
 			'privacy_text' => 'By submitting your email, you agree that we may store it for the purpose of providing this discount offer.',
+
+            'campaign_id' => 'default-campaign',
         ];
 
         $settings = wp_parse_args(get_option('pfd_settings', []), $defaults);
@@ -115,19 +117,20 @@ class PFD_Frontend
             true
         );
 
-       wp_localize_script(
-			'pfd-frontend',
-			'pfdData',
-			[
-				'ajaxUrl' => admin_url('admin-ajax.php'),
-				'nonce' => wp_create_nonce('pfd_save_email_nonce'),
-				'popupDelay' => absint($this->settings['popup_delay']),
-				'stickyHideHours' => absint($this->settings['sticky_hide_hours']),
-				'couponCode' => sanitize_text_field($this->settings['coupon_code']),
-				'discountValue' => sanitize_text_field($this->settings['discount_value']),
-				'storageKey' => 'popup_for_discount_state',
-			]
-		);
+        wp_localize_script(
+            'pfd-frontend',
+            'pfdData',
+            [
+                'ajaxUrl' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('pfd_save_email_nonce'),
+                'popupDelay' => absint($this->settings['popup_delay']),
+                'stickyHideHours' => absint($this->settings['sticky_hide_hours']),
+                'campaignId' => sanitize_text_field($this->settings['campaign_id']),
+                'couponCode' => sanitize_text_field($this->settings['coupon_code']),
+                'discountValue' => sanitize_text_field($this->settings['discount_value']),
+                'storageKey' => 'popup_for_discount_state',
+            ]
+        );
     }
 
     public function render_popup()
