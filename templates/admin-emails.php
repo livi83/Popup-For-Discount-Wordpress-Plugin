@@ -141,104 +141,117 @@ $current_url = menu_page_url('popup-for-discount-emails', false);
                     Apply
                 </button>
             </div>
+			<div class="pfd-table-wrap">
+				<table class="widefat striped pfd-emails-table">
 
-            <table class="widefat striped pfd-emails-table">
+				  <thead>
+						<tr>
+							<th>
+								<input type="checkbox" id="pfd-select-all-submissions">
+							</th>
+							<th>ID</th>
+							<th>Email</th>
+							<th>Campaign ID</th>
+							<th>Coupon code</th>
+							<th>Page URL</th>
+							<th>Date</th>
+							<th>IP hash</th>
+							<th>User agent</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
 
-              <thead>
-                    <tr>
-                        <th>
-                            <input type="checkbox" id="pfd-select-all-submissions">
-                        </th>
-                        <th>ID</th>
-                        <th>Email</th>
-                        <th>Campaign ID</th>
-                        <th>Coupon code</th>
-                        <th>Page URL</th>
-                        <th>Date</th>
-                        <th>IP hash</th>
-                        <th>User agent</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+					<tbody>
+						<?php if (!empty($items)) : ?>
+							<?php foreach ($items as $item) : ?>
+								<tr>
+									<td>
+										<input
+											type="checkbox"
+											class="pfd-submission-checkbox"
+											name="pfd_submission_ids[]"
+											value="<?php echo esc_attr($item['id']); ?>"
+										>
+									</td>
 
-                <tbody>
-                    <?php if (!empty($items)) : ?>
-                        <?php foreach ($items as $item) : ?>
-                            <tr>
-                                <td>
-                                    <input
-                                        type="checkbox"
-                                        class="pfd-submission-checkbox"
-                                        name="pfd_submission_ids[]"
-                                        value="<?php echo esc_attr($item['id']); ?>"
-                                    >
-                                </td>
+									<td><?php echo esc_html($item['id']); ?></td>
 
-                                <td><?php echo esc_html($item['id']); ?></td>
+									<td>
+										<strong><?php echo esc_html($item['email']); ?></strong>
+									</td>
 
-                                <td>
-                                    <strong><?php echo esc_html($item['email']); ?></strong>
-                                </td>
+									<td><?php echo !empty($item['campaign_id']) ? esc_html($item['campaign_id']) : '—'; ?></td>
 
-                                <td><?php echo !empty($item['campaign_id']) ? esc_html($item['campaign_id']) : '—'; ?></td>
+									<td><?php echo esc_html($item['coupon_code']); ?></td>
 
-                                <td><?php echo esc_html($item['coupon_code']); ?></td>
+									<td>
+										<?php if (!empty($item['page_url'])) : ?>
+											<a href="<?php echo esc_url($item['page_url']); ?>" target="_blank" rel="noopener noreferrer">
+												<?php echo esc_html(wp_trim_words($item['page_url'], 8, '...')); ?>
+											</a>
+										<?php else : ?>
+											—
+										<?php endif; ?>
+									</td>
 
-                                <td>
-                                    <?php if (!empty($item['page_url'])) : ?>
-                                        <a href="<?php echo esc_url($item['page_url']); ?>" target="_blank" rel="noopener noreferrer">
-                                            <?php echo esc_html(wp_trim_words($item['page_url'], 8, '...')); ?>
-                                        </a>
-                                    <?php else : ?>
-                                        —
-                                    <?php endif; ?>
-                                </td>
+									<td><?php echo esc_html($item['created_at']); ?></td>
 
-                                <td><?php echo esc_html($item['created_at']); ?></td>
+									<td>
+										<?php if (!empty($item['user_ip'])) : ?>
+											<code title="<?php echo esc_attr($item['user_ip']); ?>">
+												<?php echo esc_html(substr($item['user_ip'], 0, 12) . '...'); ?>
+											</code>
+										<?php else : ?>
+											—
+										<?php endif; ?>
+									</td>
 
-                                <td>
-                                    <?php echo !empty($item['user_ip']) ? esc_html($item['user_ip']) : '—'; ?>
-                                </td>
+									<td>
+										<?php if (!empty($item['user_agent'])) : ?>
+											<span title="<?php echo esc_attr($item['user_agent']); ?>">
+												<?php echo esc_html(wp_trim_words($item['user_agent'], 5, '...')); ?>
+											</span>
+										<?php else : ?>
+											—
+										<?php endif; ?>
+									</td>
 
-                                <td>
-                                    <?php echo !empty($item['user_agent']) ? esc_html(wp_trim_words($item['user_agent'], 10, '...')) : '—'; ?>
-                                </td>
+									<td>
+										<?php
+										$delete_url = wp_nonce_url(
+											add_query_arg(
+												[
+													'page' => 'popup-for-discount-emails',
+													'pfd_action' => 'delete_submission',
+													'submission_id' => absint($item['id']),
+												],
+												admin_url('admin.php')
+											),
+											'pfd_delete_submission_' . absint($item['id'])
+										);
+										?>
 
-                                <td>
-                                    <?php
-                                    $delete_url = wp_nonce_url(
-                                        add_query_arg(
-                                            [
-                                                'page' => 'popup-for-discount-emails',
-                                                'pfd_action' => 'delete_submission',
-                                                'submission_id' => absint($item['id']),
-                                            ],
-                                            admin_url('admin.php')
-                                        ),
-                                        'pfd_delete_submission_' . absint($item['id'])
-                                    );
-                                    ?>
+										<a
+											href="<?php echo esc_url($delete_url); ?>"
+											class="button button-small"
+											onclick="return confirm('Are you sure you want to delete this submission?');"
+										>
+											Delete
+										</a>
+									</td>
 
-                                    <a
-                                        href="<?php echo esc_url($delete_url); ?>"
-                                        class="button button-small"
-                                        onclick="return confirm('Are you sure you want to delete this submission?');"
-                                    >
-                                        Delete
-                                    </a>
-                                </td>
-
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else : ?>
-                        <tr>
-                            <td colspan="10">
-                                No collected emails found.
-                            </td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+								</tr>
+							<?php endforeach; ?>
+						<?php else : ?>
+							<tr>
+								<td colspan="10">
+									No collected emails found.
+								</td>
+							</tr>
+						<?php endif; ?>
+					</tbody>
+				</table>
+			</div>
         </form>
 
         <?php if ($total_pages > 1) : ?>

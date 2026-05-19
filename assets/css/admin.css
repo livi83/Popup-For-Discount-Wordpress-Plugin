@@ -104,7 +104,81 @@
 .pfd-emails-table td:last-child {
     width: 90px;
 }
+.pfd-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
 
+.pfd-emails-table {
+    table-layout: fixed;
+    min-width: 1100px;
+}
+
+.pfd-emails-table th,
+.pfd-emails-table td {
+    vertical-align: middle;
+}
+
+.pfd-emails-table th:nth-child(1),
+.pfd-emails-table td:nth-child(1) {
+    width: 38px;
+    text-align: center;
+}
+
+.pfd-emails-table th:nth-child(2),
+.pfd-emails-table td:nth-child(2) {
+    width: 60px;
+}
+
+.pfd-emails-table th:nth-child(3),
+.pfd-emails-table td:nth-child(3) {
+    width: 160px;
+}
+
+.pfd-emails-table th:nth-child(4),
+.pfd-emails-table td:nth-child(4) {
+    width: 130px;
+}
+
+.pfd-emails-table th:nth-child(5),
+.pfd-emails-table td:nth-child(5) {
+    width: 120px;
+}
+
+.pfd-emails-table th:nth-child(6),
+.pfd-emails-table td:nth-child(6) {
+    width: 190px;
+}
+
+.pfd-emails-table th:nth-child(7),
+.pfd-emails-table td:nth-child(7) {
+    width: 120px;
+}
+
+.pfd-emails-table th:nth-child(8),
+.pfd-emails-table td:nth-child(8) {
+    width: 140px;
+}
+
+.pfd-emails-table th:nth-child(9),
+.pfd-emails-table td:nth-child(9) {
+    width: 190px;
+}
+
+.pfd-emails-table th:nth-child(10),
+.pfd-emails-table td:nth-child(10) {
+    width: 90px;
+}
+
+.pfd-emails-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pfd-emails-table code {
+    font-size: 12px;
+    white-space: nowrap;
+}
 @media (max-width: 960px) {
     .pfd-filters {
         grid-template-columns: 1fr 1fr;

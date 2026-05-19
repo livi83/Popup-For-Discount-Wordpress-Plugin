@@ -101,20 +101,17 @@ class PFD_Submissions
 
     private function get_user_ip()
     {
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            return sanitize_text_field(wp_unslash($_SERVER['HTTP_CLIENT_IP']));
+        if (empty($_SERVER['REMOTE_ADDR'])) {
+            return '';
         }
 
-        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ips = explode(',', wp_unslash($_SERVER['HTTP_X_FORWARDED_FOR']));
-            return sanitize_text_field(trim($ips[0]));
+        $ip_address = sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR']));
+
+        if (!filter_var($ip_address, FILTER_VALIDATE_IP)) {
+            return '';
         }
 
-        if (!empty($_SERVER['REMOTE_ADDR'])) {
-            return sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR']));
-        }
-
-        return '';
+        return $ip_address;
     }
 
     private function hash_ip_address($ip_address)

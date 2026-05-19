@@ -21,6 +21,8 @@ global $wpdb;
 
 $table_name = $wpdb->prefix . 'pfd_submissions';
 
-$wpdb->query("DROP TABLE IF EXISTS {$table_name}");
+$wpdb->query(
+    'DROP TABLE IF EXISTS `' . esc_sql($table_name) . '`'
+);
 
 delete_option('pfd_settings');

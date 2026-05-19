@@ -48,20 +48,19 @@ class PFD_Activator
             'image_url' => 'https://www.peptiderevolution.eu/wp-content/uploads/2026/02/Rectangle_34.png.png',
             'logo_url'  => 'https://www.peptiderevolution.eu/wp-content/uploads/2026/02/logo.svg',
 
-            'headline_step_1' => 'Save up to<br>54% today',
+            'headline_step_1' => 'Save up to<br>{discount}% today',
             'subtext_step_1'  => 'Enter your email to receive<br>instructions to get discount',
             'email_placeholder' => 'Your email address',
             'button_text' => 'Continue',
 
             'headline_step_2' => 'Instructions',
-            'instruction_text' => 'Use this code at checkout to get -20%',
+            'instruction_text' => 'Use this code at checkout to get -{discount}%',
             'coupon_code' => 'REVOLUTION20',
             'after_coupon_text' => 'or code from influencer',
             'benefits_title' => 'Do not forget to use also:',
             'benefits_list' => "👉 Buy more than 250€ get FREE SHIPPING\n👉 Buy any 8+ products and get -17%\n👉 Pay by bank transfer and get -5%\n👉 Summer Products Now -12%",
 
-            'bar_text' => 'For 20% off, use code:',
-            'sticky_button_text' => 'Discount available',
+            'bar_text' => 'For {discount}% off, use code:',
             
             'popup_delay' => 1200,
 

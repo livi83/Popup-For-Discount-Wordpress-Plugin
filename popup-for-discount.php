@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Popup for Discount
- * Plugin URI: https://example.com
  * Description: Custom discount popup for collecting email addresses and displaying coupon instructions.
  * Version: 1.1.4
- * Author: Lívia Kelebercová
- * Author URI: https://example.com
+ * Requires at least: 5.8
+ * Requires PHP: 7.4
+ * Author: lkelebercova
  * Text Domain: popup-for-discount
  */
 

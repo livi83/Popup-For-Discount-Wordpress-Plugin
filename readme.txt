@@ -1,9 +1,9 @@
 === Popup for Discount ===
-Contributors: Lívia Kelebercová
+Contributors: lkelebercova
 Tags: popup, discount, coupon, email collection, leads, marketing
 Requires at least: 5.8
 Tested up to: 6.6
-Requires PHP: 8.4
+Requires PHP: 7.4
 Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -86,13 +86,6 @@ Yes. Use the `Campaign ID` field to identify the active campaign. Submissions ca
 = What happens when I uninstall the plugin? =
 
 By default, plugin data is preserved. If you enable `Delete data on uninstall`, plugin settings and collected submissions will be permanently deleted when the plugin is uninstalled.
-
-== Screenshots ==
-
-1. Popup settings screen.
-2. Frontend discount popup.
-3. Collected emails admin table.
-4. CSV export filters.
 
 == Changelog ==
 
