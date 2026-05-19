@@ -6,6 +6,9 @@ if (!defined('ABSPATH')) {
 
 class PFD_Submissions
 {
+    private const RATE_LIMIT_MAX_SUBMISSIONS = 3;
+    private const RATE_LIMIT_WINDOW_SECONDS = HOUR_IN_SECONDS;
+
     public function init()
     {
         add_action('wp_ajax_pfd_save_email', [$this, 'save_email']);
@@ -35,13 +38,24 @@ class PFD_Submissions
             ], 400);
         }
 
+        $ip_address = $this->get_user_ip();
+        $ip_hash = $this->hash_ip_address($ip_address);
+
+        if ($this->is_rate_limited($ip_hash)) {
+            wp_send_json_error([
+                'message' => 'Too many submissions. Please try again later.',
+            ], 429);
+        }
+
+        $this->increment_rate_limit($ip_hash);
+
         $settings = get_option('pfd_settings', []);
 
         $user_ip = '';
         $user_agent = '';
 
         if (!empty($settings['store_ip_address'])) {
-            $user_ip = $this->get_user_ip();
+            $user_ip = $ip_hash;
         }
 
         if (!empty($settings['store_user_agent']) && !empty($_SERVER['HTTP_USER_AGENT'])) {
@@ -102,4 +116,68 @@ class PFD_Submissions
 
         return '';
     }
+
+    private function hash_ip_address($ip_address)
+    {
+        if (empty($ip_address)) {
+            return '';
+        }
+
+        return hash_hmac(
+            'sha256',
+            $ip_address,
+            wp_salt('auth')
+        );
+    }
+
+    private function get_rate_limit_key($ip_hash)
+    {
+        if (empty($ip_hash)) {
+            return '';
+        }
+
+        return 'pfd_rate_limit_' . md5($ip_hash);
+    }
+
+    private function is_rate_limited($ip_hash)
+    {
+        if (empty($ip_hash)) {
+            return false;
+        }
+
+        $key = $this->get_rate_limit_key($ip_hash);
+
+        if (empty($key)) {
+            return false;
+        }
+
+        $attempts = (int) get_transient($key);
+
+        return $attempts >= self::RATE_LIMIT_MAX_SUBMISSIONS;
+    }
+
+    private function increment_rate_limit($ip_hash)
+    {
+        if (empty($ip_hash)) {
+            return;
+        }
+
+        $key = $this->get_rate_limit_key($ip_hash);
+
+        if (empty($key)) {
+            return;
+        }
+
+        $attempts = (int) get_transient($key);
+        $attempts++;
+
+        set_transient(
+            $key,
+            $attempts,
+            self::RATE_LIMIT_WINDOW_SECONDS
+        );
+    }
+
+
+    
 }

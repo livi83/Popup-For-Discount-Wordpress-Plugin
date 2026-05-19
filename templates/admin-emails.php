@@ -155,7 +155,7 @@ $current_url = menu_page_url('popup-for-discount-emails', false);
                         <th>Coupon code</th>
                         <th>Page URL</th>
                         <th>Date</th>
-                        <th>IP</th>
+                        <th>IP hash</th>
                         <th>User agent</th>
                         <th>Actions</th>
                     </tr>

@@ -403,12 +403,15 @@ $settings = wp_parse_args($settings, $defaults);
 
             <table class="form-table">
                 <tr>
-                    <th scope="row">Store IP address</th>
+                    <th scope="row">Store anonymized IP hash</th>
                     <td>
                         <label>
                             <input type="checkbox" name="pfd_settings[store_ip_address]" value="1" <?php checked($settings['store_ip_address'], 1); ?>>
-                            Store visitor IP address with the submitted email
+                            Store anonymized visitor IP hash with the submitted email
                         </label>
+                        <p class="description">
+                            The real IP address is not stored. The plugin stores only a one-way hash for basic abuse prevention and reporting.
+                        </p>
                     </td>
                 </tr>
 

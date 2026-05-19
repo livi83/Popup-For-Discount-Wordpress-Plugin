@@ -107,7 +107,7 @@ class PFD_Export
             'Campaign ID',
             'Coupon code',
             'Page URL',
-            'IP address',
+            'IP hash',
             'User agent',
             'Created at',
         ]);
